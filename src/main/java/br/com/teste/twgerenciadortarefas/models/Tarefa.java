@@ -4,9 +4,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -36,6 +39,10 @@ public class Tarefa {
 	
 	@Column(name = "tar_concluida", nullable = false)
 	private boolean concluida = false;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "usr_id")// a chave estrangeira que une essas duas entidades via jpa
+	private Usuario usuario; //varias tarefas pode ter um usuario
 
 	public long getId() {
 		return id;
@@ -75,6 +82,14 @@ public class Tarefa {
 
 	public void setConcluida(boolean concluida) {
 		this.concluida = concluida;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 }
